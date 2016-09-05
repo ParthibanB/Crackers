@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit
+		name="com.com.universalcrackers"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>com.universalcrackers.dataaccess.model.Brand</class>
+		<class>com.universalcrackers.dataaccess.model.Category</class>
+		<class>com.universalcrackers.dataaccess.model.CategoryType</class>
+		<class>com.universalcrackers.dataaccess.model.Order</class>
+		<class>com.universalcrackers.dataaccess.model.OrderItems</class>
+		<class>com.universalcrackers.dataaccess.model.Product</class>
+		<class>com.universalcrackers.dataaccess.model.ProductDetails</class>
+		<properties>
+            <property name="hibernate.transaction.auto_close_session" value="false"/>
+			<property name="hibernate.transaction.flush_before_completion" value="false"/>
+        </properties>
+	</persistence-unit>
+</persistence>
