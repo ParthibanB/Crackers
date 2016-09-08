@@ -3,15 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.universalcrackers.model;
+package com.universalcrackers.dataaccess.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -48,6 +51,9 @@ public class Order implements Serializable {
     @Column(name = "productTotal")
     private Long productTotal;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+    private Collection<OrderItems> orderItems;
+    
 	public Long getId() {
 		return id;
 	}
@@ -118,5 +124,13 @@ public class Order implements Serializable {
 
 	public void setProductTotal(Long productTotal) {
 		this.productTotal = productTotal;
+	}
+
+	public Collection<OrderItems> getOrderItems() {
+		return orderItems;
+	}
+
+	public void setOrderItems(Collection<OrderItems> orderItems) {
+		this.orderItems = orderItems;
 	}
 }

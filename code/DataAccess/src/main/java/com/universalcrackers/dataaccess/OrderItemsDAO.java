@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.universalcrackers.model.OrderItems;
+import com.universalcrackers.dataaccess.model.OrderItems;
 
 
 @Repository

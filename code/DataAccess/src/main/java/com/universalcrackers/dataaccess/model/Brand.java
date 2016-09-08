@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.universalcrackers.model;
+package com.universalcrackers.dataaccess.model;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -18,8 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "categorytype")
-public class CategoryType implements Serializable {
+@Table(name = "brand")
+public class Brand implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,10 +32,10 @@ public class CategoryType implements Serializable {
     
     @Column(name = "status")
     private short status;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
-    private Collection<Category> categories;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+    private Collection<Product> products;
+    
 	public Long getId() {
 		return id;
 	}
@@ -60,12 +60,12 @@ public class CategoryType implements Serializable {
 		this.status = status;
 	}
 
-	public Collection<Category> getCategories() {
-		return categories;
+	public Collection<Product> getProducts() {
+		return products;
 	}
 
-	public void setCategories(Collection<Category> categories) {
-		this.categories = categories;
+	public void setProducts(Collection<Product> products) {
+		this.products = products;
 	}
-	
+
 }

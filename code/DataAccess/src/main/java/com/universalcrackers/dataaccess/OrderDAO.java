@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.universalcrackers.model.Order;
+import com.universalcrackers.dataaccess.model.Order;
 
 @Repository
 @SuppressWarnings("restriction")

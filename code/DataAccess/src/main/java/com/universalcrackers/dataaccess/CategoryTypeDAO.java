@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.universalcrackers.model.CategoryType;
+import com.universalcrackers.dataaccess.model.CategoryType;
 
 @Repository
 @SuppressWarnings("restriction")
