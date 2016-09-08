@@ -1,9 +1,15 @@
 package com.universalcrackers.controller;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.universalcrackers.service.CrackerService;
@@ -20,6 +26,7 @@ public class UniversalCrackersController
 	public ModelAndView getIndex()
 	{
 		ModelAndView mv = new ModelAndView();
+		mv.addObject("categories", crackerService.getCategories().getResponseObject());
 		mv.setViewName("view");
 		return mv;
 	}
@@ -28,6 +35,7 @@ public class UniversalCrackersController
 	public ModelAndView getHome()
 	{
 		ModelAndView mv = new ModelAndView();
+		mv.addObject("categories", crackerService.getCategories().getResponseObject());
 		mv.setViewName("view");
 		return mv;
 	}
@@ -60,7 +68,24 @@ public class UniversalCrackersController
 	public ModelAndView backToHome()
 	{
 		ModelAndView mv = new ModelAndView();
+		mv.addObject("categories", crackerService.getCategories().getResponseObject());
 		mv.setViewName("home");
+		return mv;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET,value ="/productList")
+	public ModelAndView productList(@RequestParam("categories")String categories)
+	{
+		ModelAndView mv = new ModelAndView();
+		if(!StringUtils.isEmpty(categories)){
+			String[] categoriesStr = categories.split(",");
+			List<Long> categoriesList = new ArrayList<Long>();
+			for(String categoryStr : categoriesStr){
+				categoriesList.add(new Long(categoryStr));
+			}
+			mv.addObject("products", crackerService.getProductList(categoriesList).getResponseObject());
+		}
+		mv.setViewName("products");
 		return mv;
 	}
 }

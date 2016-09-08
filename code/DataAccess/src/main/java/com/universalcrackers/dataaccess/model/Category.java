@@ -6,8 +6,10 @@
 package com.universalcrackers.dataaccess.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -30,7 +33,7 @@ public class Category implements Serializable {
 	private Long id;
 
 	@Column(name = "name")
-	private float name;
+	private String name;
 
 	@JoinColumn(name = "categoryTypeId", referencedColumnName = "id")
 	@ManyToOne(optional = false)
@@ -39,6 +42,9 @@ public class Category implements Serializable {
 	@Column(name = "showInMenu")
 	private short ShowInMenu;
 
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+    private Collection<Product> products;
+	
 	public Long getId() {
 		return id;
 	}
@@ -47,11 +53,11 @@ public class Category implements Serializable {
 		this.id = id;
 	}
 
-	public float getName() {
+	public String getName() {
 		return name;
 	}
 
-	public void setName(float name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
@@ -69,5 +75,13 @@ public class Category implements Serializable {
 
 	public void setShowInMenu(short showInMenu) {
 		ShowInMenu = showInMenu;
+	}
+
+	public Collection<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(Collection<Product> products) {
+		this.products = products;
 	}
 }

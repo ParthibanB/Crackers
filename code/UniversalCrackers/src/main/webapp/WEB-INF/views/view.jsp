@@ -5,7 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Universal Crackers - Shop</title>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!-- Google Fonts -->
 <link
 	href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600'
@@ -77,19 +78,14 @@
 					<div class="widget widget-categories">
 						<h3 class="sidebarTitle">Categories</h3>
 						<ul class="sidebar-menu">
-							<li><input type="checkbox" /> <span class="menuName">MENU
-									1</span> <span class="count">(09)</span></li>
-							<li><input type="checkbox" /> <span class="menuName">MENU
-									2</span> <span class="count">(33)</span></li>
-							<li><input type="checkbox" /> <span class="menuName">MENU
-									3</span> <span class="count">(109)</span></li>
-							<li><input type="checkbox" /> <span class="menuName">MENU
-									4</span> <span class="count">(11)</span></li>
-							<li><input type="checkbox" /> <span class="menuName">MENU
-									5</span> <span class="count">(678)</span></li>
+							<c:forEach var="category" items="${categories}" varStatus="loop">
+								<li><input type="checkbox" id="${category.id}" ${loop.first?'checked':'' }/>
+								 <span class="menuName">${category.name}</span>
+								 <span class="count">(${category.productCount})</span></li>
+							</c:forEach>
 						</ul>
 					</div>
-					<div class="widget widget-categories">
+					<!-- <div class="widget widget-categories">
 						<h3 class="sidebarTitle">Brands</h3>
 						<ul class="sidebar-menu">
 							<li><input type="checkbox" /> <span class="menuName">MENU
@@ -103,130 +99,9 @@
 							<li><input type="checkbox" /> <span class="menuName">MENU
 									5</span> <span class="count">(678)</span></li>
 						</ul>
-					</div>
+					</div> -->
 				</div>
-				<div class="col-md-9 col-sm-6">
-					<div class="col-md-3 col-sm-6">
-						<div class="single-shop-product">
-							<div class="product-upper">
-								<img src="resources/img/comingSoon.jpg" alt="">
-							</div>
-							<h2>Apple new mac book 2015 March :P</h2>
-							<div class="product-carousel-price">
-								<ins>$899.00</ins>
-								<!-- <del>$999.00</del> -->
-							</div>
-
-							<div class="product-option-shop">
-								<input type="number" class="quantityBox" name="quantity"
-									value="1"> <a class="add_to_cart_button"
-									data-quantity="1" data-product_sku="" data-product_id="70"
-									rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to
-									cart</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-3 col-sm-6">
-						<div class="single-shop-product">
-							<div class="product-upper">
-								<img src="resources/img/comingSoon.jpg" alt="">
-							</div>
-							<h2>Apple new mac book 2015 March :P</h2>
-							<div class="product-carousel-price">
-								<ins>$899.00</ins>
-								<!-- <del>$999.00</del> -->
-							</div>
-
-							<div class="product-option-shop">
-								<input type="number" class="quantityBox" name="quantity"
-									value="1"> <a class="add_to_cart_button"
-									data-quantity="1" data-product_sku="" data-product_id="70"
-									rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to
-									cart</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-3 col-sm-6">
-						<div class="single-shop-product">
-							<div class="product-upper">
-								<img src="resources/img/comingSoon.jpg" alt="">
-							</div>
-							<h2>Apple new mac book 2015 March :P</h2>
-							<div class="product-carousel-price">
-								<ins>$899.00</ins>
-								<!-- <del>$999.00</del> -->
-							</div>
-
-							<div class="product-option-shop">
-								<input type="number" class="quantityBox" name="quantity"
-									value="1"> <a class="add_to_cart_button"
-									data-quantity="1" data-product_sku="" data-product_id="70"
-									rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to
-									cart</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-3 col-sm-6">
-						<div class="single-shop-product">
-							<div class="product-upper">
-								<img src="resources/img/comingSoon.jpg" alt="">
-							</div>
-							<h2>Apple new mac book 2015 March :P</h2>
-							<div class="product-carousel-price">
-								<ins>$899.00</ins>
-								<!-- <del>$999.00</del> -->
-							</div>
-
-							<div class="product-option-shop">
-								<input type="number" class="quantityBox" name="quantity"
-									value="1"> <a class="add_to_cart_button"
-									data-quantity="1" data-product_sku="" data-product_id="70"
-									rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to
-									cart</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-3 col-sm-6">
-						<div class="single-shop-product">
-							<div class="product-upper">
-								<img src="resources/img/comingSoon.jpg" alt="">
-							</div>
-							<h2>Apple new mac book 2015 March :P</h2>
-							<div class="product-carousel-price">
-								<ins>$899.00</ins>
-								<!-- <del>$999.00</del> -->
-							</div>
-
-							<div class="product-option-shop">
-								<input type="number" class="quantityBox" name="quantity"
-									value="1"> <a class="add_to_cart_button"
-									data-quantity="1" data-product_sku="" data-product_id="70"
-									rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to
-									cart</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-3 col-sm-6">
-						<div class="single-shop-product">
-							<div class="product-upper">
-								<img src="resources/img/comingSoon.jpg" alt="">
-							</div>
-							<h2>Apple new mac book 2015 March :P</h2>
-							<div class="product-carousel-price">
-								<ins>$899.00</ins>
-								<!-- <del>$999.00</del> -->
-							</div>
-
-							<div class="product-option-shop">
-								<input type="number" class="quantityBox" name="quantity"
-									value="1"> <a class="add_to_cart_button"
-									data-quantity="1" data-product_sku="" data-product_id="70"
-									rel="nofollow" href="/canvas/shop/?add-to-cart=70">Add to
-									cart</a>
-							</div>
-						</div>
-					</div>
-
+				<div class="col-md-9 col-sm-6" id="productList">
 				</div>
 			</div>
 
@@ -359,6 +234,41 @@
 				error : function(xhr){
 				}
 			});
+		}
+		
+		$('.widget-categories input[type=checkbox]').on('change',function(){
+			getProductList();
+		});
+		
+		getProductList();
+		
+		function getProductList(){
+			var categories = "";
+			$('.widget-categories input[type=checkbox]').each(function(){
+				if($(this).is(":checked")){
+					if(categories != ""){
+						categories += ",";
+					}
+					categories += $(this).attr('id');
+				}
+			});
+			if(categories.length > 0){
+				$.ajax({
+					url : "productList",
+					type : "GET",
+					dataType : "html",
+					data : {
+						"categories" : categories
+					},
+					success : function(response){
+						$('#productList').html(response);
+					},
+					error : function(xhr){
+					}
+				});	
+			}else{
+				$('#productList').html("No products found for the selection.");
+			}
 		}
 	</script>
 </body>

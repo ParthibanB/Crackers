@@ -15,11 +15,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "product")
+@NamedQueries({
+    @NamedQuery(name = "productByCategoryIds", query = "SELECT p FROM Product p where p.category.id IN :categories")})
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -33,7 +37,7 @@ public class Product implements Serializable {
     private String name;
     
     @Column(name = "displayName")
-    private Long displayName;
+    private String displayName;
     
     @JoinColumn(name = "categoryId", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -69,11 +73,11 @@ public class Product implements Serializable {
 		this.name = name;
 	}
 
-	public Long getDisplayName() {
+	public String getDisplayName() {
 		return displayName;
 	}
 
-	public void setDisplayName(Long displayName) {
+	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
 

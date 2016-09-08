@@ -1,5 +1,7 @@
 package com.universalcrackers.service.model;
 
+import com.universalcrackers.service.common.CrackersCommon;
+
 public class CrackerServiceResponse {
 
 	private int code;
@@ -25,7 +27,7 @@ public class CrackerServiceResponse {
 	}
 	
 	public CrackerServiceResponse(){
-		this.code = 1;
-		this.message = "Internal Server Error. Please try again later.";
+		this.code = CrackersCommon.FAILURE_CODE;
+		this.message = CrackersCommon.INTERNAL_ERROR_MESSAGE;
 	}
 }

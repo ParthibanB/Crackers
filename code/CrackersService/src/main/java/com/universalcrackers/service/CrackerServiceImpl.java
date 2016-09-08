@@ -4,40 +4,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.universalcrackers.dataaccess.CategoryDAO;
 import com.universalcrackers.dataaccess.OrderDAO;
 import com.universalcrackers.dataaccess.ProductDAO;
+import com.universalcrackers.dataaccess.model.Category;
 import com.universalcrackers.dataaccess.model.Order;
 import com.universalcrackers.dataaccess.model.OrderItems;
 import com.universalcrackers.dataaccess.model.Product;
+import com.universalcrackers.service.common.CrackersCommon;
+import com.universalcrackers.service.model.CategoryVO;
 import com.universalcrackers.service.model.CrackerServiceResponse;
 import com.universalcrackers.service.model.OrderDetails;
 import com.universalcrackers.service.model.ProductVO;
 
 @Service
 public class CrackerServiceImpl implements CrackerService {
-
-	private static ObjectMapper objectMapper;
 	
 	@Autowired
 	private ProductDAO productDao;
 	@Autowired
 	private OrderDAO orderDao;
-	
-	static{
-		objectMapper = new ObjectMapper();
-	}
+	@Autowired
+	private CategoryDAO categoryDao;
 	
 	public CrackerServiceResponse createOrder(OrderDetails orderDetails) {
 		CrackerServiceResponse crackerResponse = new CrackerServiceResponse();
 		if(orderDetails != null){
 			try{
-				System.out.println("Order Request :"+objectMapper.writeValueAsString(orderDetails));
 				validateOrderCreationRequest(orderDetails);
 				Order order = new Order();
 				order.setEmailId(orderDetails.getEmailId());
@@ -63,13 +60,17 @@ public class CrackerServiceImpl implements CrackerService {
 				order.setVat(new Double("0"));
 				order.setTax(new Double("0"));
 				orderDao.create(order);
+				crackerResponse.setMessage(CrackersCommon.SUCCESS_MESSAGE);
+				crackerResponse.setCode(CrackersCommon.SUCCESS_CODE);
+				crackerResponse.setResponseObject("Order number");
 			}catch(CrackerServiceException e){
 				crackerResponse.setMessage(e.getMessage());
 			}catch(Exception e){
-				e.printStackTrace();
+				crackerResponse.setMessage(e.getMessage());
 			}
 		}else{
 			System.out.println("Order details request is empty.");
+			crackerResponse.setMessage("Order details request is empty.");
 		}
 		
 		return crackerResponse;
@@ -89,10 +90,55 @@ public class CrackerServiceImpl implements CrackerService {
 			throw new CrackerServiceException("No products.");
 		}
 	}
-	
-	public static void main(String args[]){
-		ClassPathXmlApplicationContext ct = new ClassPathXmlApplicationContext("crackerServicesApplicationContext.xml");
-		CrackerServiceImpl service = ct.getBean(CrackerServiceImpl.class);
-		System.out.println("ajdfkljdfkldj");
+
+	public CrackerServiceResponse getCategories() {
+		CrackerServiceResponse crackerResponse = new CrackerServiceResponse();
+		try{
+			List<Category> categories = categoryDao.findAll();
+			crackerResponse.setCode(CrackersCommon.SUCCESS_CODE);
+			if(!CollectionUtils.isEmpty(categories)){
+				List<CategoryVO> categoriesVo = new ArrayList<CategoryVO>();
+				for(Category category : categories){
+					CategoryVO categoryVo = new CategoryVO();
+					categoryVo.setId(category.getId());
+					categoryVo.setName(category.getName());
+					//categoryVo.setProductCount(category.getProducts().size());
+					categoriesVo.add(categoryVo);
+				}
+				crackerResponse.setMessage(CrackersCommon.SUCCESS_MESSAGE);
+				crackerResponse.setResponseObject(categoriesVo);
+			}else{
+				crackerResponse.setMessage(CrackersCommon.NO_CATEGORIES_PRESENT);
+			}
+		}catch(Exception e){
+			crackerResponse.setMessage(e.getMessage());
+		}
+		return crackerResponse;
+	}
+
+	public CrackerServiceResponse getProductList(List<Long> categories) {
+		CrackerServiceResponse crackerResponse = new CrackerServiceResponse();
+		try{
+			List<Product> products = productDao.getProducts(categories);
+			crackerResponse.setCode(CrackersCommon.SUCCESS_CODE);
+			if(!CollectionUtils.isEmpty(products)){
+				List<ProductVO> productVos = new ArrayList<ProductVO>();
+				for(Product product : products){
+					ProductVO productVo = new ProductVO();
+					productVo.setDescription(product.getDisplayName());
+					productVo.setName(product.getName());
+					productVo.setId(product.getId());
+					productVo.setUnitPrice(product.getPrice());
+					productVos.add(productVo);
+				}
+				crackerResponse.setMessage(CrackersCommon.SUCCESS_MESSAGE);
+				crackerResponse.setResponseObject(productVos);
+			}else{
+				crackerResponse.setMessage(CrackersCommon.NO_CATEGORIES_PRESENT);
+			}
+		}catch(Exception e){
+			crackerResponse.setMessage(e.getMessage());
+		}
+		return crackerResponse;
 	}
 }

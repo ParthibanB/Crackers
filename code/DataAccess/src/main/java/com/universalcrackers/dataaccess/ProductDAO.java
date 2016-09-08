@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,5 +57,13 @@ public class ProductDAO extends GenericDao<Product> {
 
 	public String countREST() {
 		return String.valueOf(super.count());
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Product> getProducts(List<Long> categories){
+		Query namedQuery = entityManager.createNamedQuery("productByCategoryIds");
+		namedQuery.setParameter("categories", categories);
+		List<Product> products = (List<Product>)namedQuery.getResultList();
+		return products;
 	}
 }
