@@ -58,8 +58,8 @@
 						</form>
 					</div>
 					<div class="col-md-4 shopping-item">
-						<a href="javascript:void(0)">Cart - <span class="cart-amunt">$100</span>
-							<i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
+						<a href="javascript:void(0)">Cart - &#x20a8; <span class="cart-amunt">0.00</span>
+							<i class="fa fa-shopping-cart"></i> <span class="product-count">0</span></a>
 					</div>
 				</div>
 			</div>
@@ -185,10 +185,21 @@
 		});
 	
 		function getCartDetails(){
+			var cartItemsList = [];
+			for(var td in cartItems){
+				var cartItem = {};
+				cartItem["id"] = td;
+				cartItem["qty"] = cartItems[td].qty;
+				cartItem["unitPrice"] = cartItems[td].price;
+				cartItem["imgUrl"] = cartItems[td].img;
+				cartItem["name"] = cartItems[td].name;
+				cartItemsList.push(cartItem);
+			}
 			$.ajax({
 				url : "cart",
-				type : "GET",
+				type : "POST",
 				dataType : "html",
+				data : {"cartItems" : JSON.stringify(cartItemsList)},
 				success : function(response){
 					$('.single-product-area .container').html(response);
 				},
@@ -269,6 +280,19 @@
 			}else{
 				$('#productList').html("No products found for the selection.");
 			}
+		}
+		
+		var cartItems = {};
+		function addToCart(productId,qty,price,img,name){
+			cartItems[productId] = {"qty" : qty,"price" : price,"img" : img,"name" : name};
+			var totalItems = 0;
+			var totalAmt = 0;
+			for(var td in cartItems){
+				totalItems += cartItems[td].qty;
+				totalAmt += (cartItems[td].price * cartItems[td].qty);
+			}
+			$('.cart-amunt').html(totalAmt.toFixed(2));
+			$('.product-count').html(totalItems);
 		}
 	</script>
 </body>

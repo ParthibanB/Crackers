@@ -4,6 +4,8 @@ package com.universalcrackers.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.universalcrackers.model.CartItem;
 import com.universalcrackers.service.CrackerService;
 
 @Controller
@@ -21,6 +25,12 @@ public class UniversalCrackersController
 
 	@Autowired
 	private CrackerService crackerService;
+	
+	private static ObjectMapper objectMapper;
+	
+	static{
+		objectMapper = new ObjectMapper();
+	}
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView getIndex()
@@ -40,10 +50,19 @@ public class UniversalCrackersController
 		return mv;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET,value ="/cart")
-	public ModelAndView getCart()
+	@RequestMapping(method = RequestMethod.POST,value ="/cart")
+	public ModelAndView getCart(HttpServletRequest servletRequest)
 	{
 		ModelAndView mv = new ModelAndView();
+		try{
+			if(true){
+				List<CartItem> cartItemsList = objectMapper.readValue(servletRequest.getParameter("cartItems"),
+						objectMapper.getTypeFactory().constructCollectionType(List.class, CartItem.class));
+				mv.addObject("cartItems", cartItemsList);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		mv.setViewName("cart");
 		return mv;
 	}
