@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.universalcrackers.dataaccess.model.Product;
 
 @Repository
-@SuppressWarnings("restriction")
+@SuppressWarnings({"restriction","unchecked"})
 public class ProductDAO extends GenericDao<Product> {
 
 	@PersistenceContext
@@ -59,10 +59,16 @@ public class ProductDAO extends GenericDao<Product> {
 		return String.valueOf(super.count());
 	}
 	
-	@SuppressWarnings("unchecked")
 	public List<Product> getProducts(List<Long> categories){
 		Query namedQuery = entityManager.createNamedQuery("productByCategoryIds");
 		namedQuery.setParameter("categories", categories);
+		List<Product> products = (List<Product>)namedQuery.getResultList();
+		return products;
+	}
+
+	public List<Product> searchProducts(String searchKey) {
+		Query namedQuery = entityManager.createNamedQuery("findBySearchKey");
+		namedQuery.setParameter("searchKey", "%"+searchKey+"%");
 		List<Product> products = (List<Product>)namedQuery.getResultList();
 		return products;
 	}

@@ -12,4 +12,6 @@ public interface CrackerService {
 	public CrackerServiceResponse getCategories();
 	
 	public CrackerServiceResponse getProductList(List<Long> categories);
+
+	public CrackerServiceResponse searchProduct(String searchKey);
 }

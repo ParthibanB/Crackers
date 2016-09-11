@@ -7,8 +7,10 @@ package com.universalcrackers.dataaccess.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,12 +28,12 @@ public class OrderItems implements Serializable {
     @Column(name = "id")
     private Long id;
     
-    @JoinColumn(name = "orderId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Order.class)
+	@JoinColumn(name = "orderId")
     private Order order;
     
-    @JoinColumn(name = "productId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Product.class)
+	@JoinColumn(name = "productId")
     private Product product;
     
     @Column(name = "quantity")

@@ -1,4 +1,4 @@
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="row">
 
 	<div class="col-md-12">
@@ -117,37 +117,26 @@
 							<thead>
 								<tr>
 									<th class="product-name">Product</th>
-									<th class="product-total">Total</th>
+									<th class="product-total">Total (in &#x20a8;)</th>
 								</tr>
 							</thead>
+							<c:set var="total" value="0" />
 							<tbody>
-								<tr class="cart_item">
-									<td class="product-name">Ship Your Idea <strong
-										class="product-quantity">× 1</strong>
-									</td>
-									<td class="product-total"><span class="amount">£15.00</span>
-									</td>
-								</tr>
-								<tr class="cart_item">
-									<td class="product-name">Ship Your Idea <strong
-										class="product-quantity">× 1</strong>
-									</td>
-									<td class="product-total"><span class="amount">£15.00</span>
-									</td>
-								</tr>
-								<tr class="cart_item">
-									<td class="product-name">Ship Your Idea <strong
-										class="product-quantity">× 1</strong>
-									</td>
-									<td class="product-total"><span class="amount">£15.00</span>
-									</td>
-								</tr>
+								<c:forEach var="cartItem" items="${cartItems}">
+									<tr class="cart_item">
+										<td class="product-name">${cartItem.name}
+										</td>
+										<td class="product-total"><span class="amount">${cartItem.qty} X ${cartItem.unitPrice}</span>
+										<c:set var="total" value="${total + cartItem.unitPrice}" />
+										</td>
+									</tr>
+								</c:forEach>
 							</tbody>
 							<tfoot>
 
 								<tr class="cart-subtotal">
 									<th>Cart Subtotal</th>
-									<td><span class="amount">£15.00</span></td>
+									<td><span class="amount">&#x20a8; ${total}</span></td>
 								</tr>
 
 								<tr class="shipping">
@@ -162,7 +151,7 @@
 
 								<tr class="order-total">
 									<th>Order Total</th>
-									<td><strong><span class="amount">£15.00</span></strong></td>
+									<td><strong><span class="amount">&#x20a8; ${total}</span></strong></td>
 								</tr>
 
 							</tfoot>

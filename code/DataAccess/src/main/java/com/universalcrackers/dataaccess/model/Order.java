@@ -11,9 +11,11 @@ import java.util.Collection;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,7 +27,7 @@ public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private Long orderId;
     
     @Column(name = "refNo")
     private String refNo;
@@ -51,15 +53,16 @@ public class Order implements Serializable {
     @Column(name = "productTotal")
     private Long productTotal;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = OrderItems.class)
+	@JoinColumn(name = "orderId")
     private Collection<OrderItems> orderItems;
-    
-	public Long getId() {
-		return id;
+
+	public Long getOrderId() {
+		return orderId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setOrderId(Long orderId) {
+		this.orderId = orderId;
 	}
 
 	public String getRefNo() {

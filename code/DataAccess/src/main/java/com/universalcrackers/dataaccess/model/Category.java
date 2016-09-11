@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,7 +23,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "category")
-
 public class Category implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -30,27 +30,28 @@ public class Category implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Basic(optional = false)
 	@Column(name = "id")
-	private Long id;
+	private Long categoryId;
 
 	@Column(name = "name")
 	private String name;
 
-	@JoinColumn(name = "categoryTypeId", referencedColumnName = "id")
-	@ManyToOne(optional = false)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = CategoryType.class)
+	@JoinColumn(name = "categoryTypeId")
 	private CategoryType categoryType;
 
 	@Column(name = "showInMenu")
 	private short ShowInMenu;
-
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
-    private Collection<Product> products;
 	
-	public Long getId() {
-		return id;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Product.class)
+	@JoinColumn(name = "categoryId")
+	private Collection<Product> products;
+
+	public Long getCategoryId() {
+		return categoryId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	public String getName() {

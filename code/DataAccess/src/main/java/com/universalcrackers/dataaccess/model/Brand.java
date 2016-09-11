@@ -11,9 +11,11 @@ import java.util.Collection;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,7 +27,7 @@ public class Brand implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private Long brandId;
     
     @Column(name = "name")
     private String name;
@@ -33,15 +35,16 @@ public class Brand implements Serializable {
     @Column(name = "status")
     private short status;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Product.class)
+	@JoinColumn(name = "brandId")
     private Collection<Product> products;
-    
-	public Long getId() {
-		return id;
+
+	public Long getBrandId() {
+		return brandId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setBrandId(Long brandId) {
+		this.brandId = brandId;
 	}
 
 	public String getName() {

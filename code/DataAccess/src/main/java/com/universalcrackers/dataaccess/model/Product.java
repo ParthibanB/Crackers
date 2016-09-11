@@ -8,8 +8,10 @@ package com.universalcrackers.dataaccess.model;
 import java.io.Serializable;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +25,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "product")
 @NamedQueries({
-    @NamedQuery(name = "productByCategoryIds", query = "SELECT p FROM Product p where p.category.id IN :categories")})
+    @NamedQuery(name = "productByCategoryIds", query = "SELECT p FROM Product p where p.category.id IN :categories"),
+    @NamedQuery(name = "findBySearchKey", query = "SELECT p FROM Product p where p.name LIKE :searchKey OR p.displayName LIKE :searchKey OR p.category.name LIKE :searchKey")})
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,7 +34,7 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    private Long id;
+    private Long productId;
     
     @Column(name = "name")
     private String name;
@@ -39,8 +42,8 @@ public class Product implements Serializable {
     @Column(name = "displayName")
     private String displayName;
     
-    @JoinColumn(name = "categoryId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Category.class)
+	@JoinColumn(name = "categoryId")
     private Category category;
     
     @Column(name = "price")
@@ -49,20 +52,28 @@ public class Product implements Serializable {
     @Column(name = "unitMeasure")
     private String unitMeasure;
     
-    @JoinColumn(name = "brandId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Brand.class)
+	@JoinColumn(name = "brandId")
     private Brand brand;
     
-    @OneToOne
-    @JoinColumn(name = "id")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = ProductDetails.class)
+	@JoinColumn(name = "id")
 	private ProductDetails productDetails;
 
-	public Long getId() {
-		return id;
+	public Long getProductId() {
+		return productId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setProductId(Long productId) {
+		this.productId = productId;
+	}
+
+	public ProductDetails getProductDetails() {
+		return productDetails;
+	}
+
+	public void setProductDetails(ProductDetails productDetails) {
+		this.productDetails = productDetails;
 	}
 
 	public String getName() {

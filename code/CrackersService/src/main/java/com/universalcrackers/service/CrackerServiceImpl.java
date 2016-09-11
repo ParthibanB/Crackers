@@ -1,7 +1,10 @@
 package com.universalcrackers.service;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -100,9 +103,9 @@ public class CrackerServiceImpl implements CrackerService {
 				List<CategoryVO> categoriesVo = new ArrayList<CategoryVO>();
 				for(Category category : categories){
 					CategoryVO categoryVo = new CategoryVO();
-					categoryVo.setId(category.getId());
+					categoryVo.setId(category.getCategoryId());
 					categoryVo.setName(category.getName());
-					//categoryVo.setProductCount(category.getProducts().size());
+					categoryVo.setProductCount(category.getProducts().size());
 					categoriesVo.add(categoryVo);
 				}
 				crackerResponse.setMessage(CrackersCommon.SUCCESS_MESSAGE);
@@ -111,6 +114,7 @@ public class CrackerServiceImpl implements CrackerService {
 				crackerResponse.setMessage(CrackersCommon.NO_CATEGORIES_PRESENT);
 			}
 		}catch(Exception e){
+			e.printStackTrace();
 			crackerResponse.setMessage(e.getMessage());
 		}
 		return crackerResponse;
@@ -122,23 +126,51 @@ public class CrackerServiceImpl implements CrackerService {
 			List<Product> products = productDao.getProducts(categories);
 			crackerResponse.setCode(CrackersCommon.SUCCESS_CODE);
 			if(!CollectionUtils.isEmpty(products)){
-				List<ProductVO> productVos = new ArrayList<ProductVO>();
-				for(Product product : products){
-					ProductVO productVo = new ProductVO();
-					productVo.setDescription(product.getDisplayName());
-					productVo.setName(product.getName());
-					productVo.setId(product.getId());
-					productVo.setUnitPrice(product.getPrice());
-					productVos.add(productVo);
-				}
+				List<ProductVO> productVos = (List<ProductVO>) convertProductEntityToVO(products);
 				crackerResponse.setMessage(CrackersCommon.SUCCESS_MESSAGE);
 				crackerResponse.setResponseObject(productVos);
 			}else{
 				crackerResponse.setMessage(CrackersCommon.NO_CATEGORIES_PRESENT);
 			}
 		}catch(Exception e){
+			e.printStackTrace();
 			crackerResponse.setMessage(e.getMessage());
 		}
 		return crackerResponse;
+	}
+
+	public CrackerServiceResponse searchProduct(String searchKey) {
+		CrackerServiceResponse crackerResponse = new CrackerServiceResponse();
+		try{
+			Set<ProductVO> productVos = new HashSet<ProductVO>();
+			List<Product> products = productDao.searchProducts(searchKey);
+			if(!CollectionUtils.isEmpty(products)){
+				productVos.addAll(convertProductEntityToVO(products));
+			}
+			crackerResponse.setCode(CrackersCommon.SUCCESS_CODE);
+			if(!CollectionUtils.isEmpty(productVos)){
+				crackerResponse.setMessage(CrackersCommon.SUCCESS_MESSAGE);
+				crackerResponse.setResponseObject(productVos);
+			}else{
+				crackerResponse.setMessage(CrackersCommon.NO_PRODUCTS_FOUND_FOR_SEARCH);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			crackerResponse.setMessage(e.getMessage());
+		}
+		return crackerResponse;
+	}
+	
+	private Collection<ProductVO> convertProductEntityToVO(Collection<Product> products){
+		List<ProductVO> productVos = new ArrayList<ProductVO>();
+		for(Product product : products){
+			ProductVO productVo = new ProductVO();
+			productVo.setDescription(product.getDisplayName());
+			productVo.setName(product.getName());
+			productVo.setId(product.getProductId());
+			productVo.setUnitPrice(product.getPrice());
+			productVos.add(productVo);
+		}
+		return productVos;
 	}
 }

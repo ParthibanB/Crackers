@@ -57,5 +57,4 @@ public class CategoryDAO extends GenericDao<Category> {
     public String countREST() {
         return String.valueOf(super.count());
     }
-
 }

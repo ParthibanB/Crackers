@@ -8,5 +8,6 @@ public interface CrackersCommon {
 	
 	public String NO_CATEGORIES_PRESENT = "No categories present.";
 	public String SUCCESS_MESSAGE = "SUCCESS";
+	public String NO_PRODUCTS_FOUND_FOR_SEARCH = "No products found for the search criteria.";
 	
 }

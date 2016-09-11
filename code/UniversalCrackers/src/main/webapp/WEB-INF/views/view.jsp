@@ -50,7 +50,7 @@
 
 				<div class="col-md-6">
 					<div class="col-md-8 headerSearch text-center">
-						<form action="#">
+						<form action="javascript:void(0)">
 							<input type="text" value="" placeholder="Search...">
 							<button class="my-btn">
 								<i class="fa fa-search"></i>
@@ -160,7 +160,7 @@
 
 
 	<!-- Latest jQuery form server -->
-	<script src="https://code.jquery.com/jquery.min.js"></script>
+	<script src="resources/js/jquery-2.1.1.min.js"></script>
 
 	<!-- Bootstrap JS form CDN -->
 	<script
@@ -293,6 +293,26 @@
 			}
 			$('.cart-amunt').html(totalAmt.toFixed(2));
 			$('.product-count').html(totalItems);
+		}
+		
+		$('.headerSearch button').on('click',function(){
+			search($('.headerSearch input').val());
+		});
+		
+		function search(searchKey){
+			if(searchKey != undefined && searchKey.trim() != ""){
+				$.ajax({
+					url : "search?searchKey="+searchKey,
+					type : "GET",
+					dataType : "html",
+					success : function(response){
+						$('#productList').html(response);
+					},
+					error : function(xhr){
+						$('#productList').html("No products found for "+searchKey);
+					}
+				});	
+			}
 		}
 	</script>
 </body>

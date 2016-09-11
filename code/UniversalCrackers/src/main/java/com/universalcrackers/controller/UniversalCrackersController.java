@@ -55,11 +55,10 @@ public class UniversalCrackersController
 	{
 		ModelAndView mv = new ModelAndView();
 		try{
-			if(true){
-				List<CartItem> cartItemsList = objectMapper.readValue(servletRequest.getParameter("cartItems"),
-						objectMapper.getTypeFactory().constructCollectionType(List.class, CartItem.class));
-				mv.addObject("cartItems", cartItemsList);
-			}
+			List<CartItem> cartItemsList = objectMapper.readValue(servletRequest.getParameter("cartItems"),
+					objectMapper.getTypeFactory().constructCollectionType(List.class, CartItem.class));
+			servletRequest.getSession(false).setAttribute("orderItems", cartItemsList);
+			mv.addObject("cartItems", cartItemsList);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -68,9 +67,10 @@ public class UniversalCrackersController
 	}
 	
 	@RequestMapping(method = RequestMethod.GET,value ="/checkout")
-	public ModelAndView getCheckout()
+	public ModelAndView getCheckout(HttpServletRequest servletRequest)
 	{
 		ModelAndView mv = new ModelAndView();
+		mv.addObject("cartItems", servletRequest.getSession().getAttribute("orderItems"));
 		mv.setViewName("checkout");
 		return mv;
 	}
@@ -103,6 +103,17 @@ public class UniversalCrackersController
 				categoriesList.add(new Long(categoryStr));
 			}
 			mv.addObject("products", crackerService.getProductList(categoriesList).getResponseObject());
+		}
+		mv.setViewName("products");
+		return mv;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET,value ="/search")
+	public ModelAndView search(@RequestParam("searchKey")String searchKey)
+	{
+		ModelAndView mv = new ModelAndView();
+		if(!StringUtils.isEmpty(searchKey)){
+			mv.addObject("products", crackerService.searchProduct(searchKey).getResponseObject());
 		}
 		mv.setViewName("products");
 		return mv;

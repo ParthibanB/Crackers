@@ -11,9 +11,11 @@ import java.util.Collection;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,7 +27,7 @@ public class CategoryType implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private Long categoryTypeId;
     
     @Column(name = "name")
     private String name;
@@ -33,15 +35,16 @@ public class CategoryType implements Serializable {
     @Column(name = "status")
     private short status;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Category.class)
+	@JoinColumn(name = "categoryTypeId")
     private Collection<Category> categories;
 
-	public Long getId() {
-		return id;
+	public Long getCategoryTypeId() {
+		return categoryTypeId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setCategoryTypeId(Long categoryTypeId) {
+		this.categoryTypeId = categoryTypeId;
 	}
 
 	public String getName() {

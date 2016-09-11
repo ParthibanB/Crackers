@@ -1242,3 +1242,6 @@ ul.footer-contact li i, .widget-icon > a > i {
 .menu-area {
     background-color: #f1f1f1;
 }
+.error{
+	color : red;
+}
