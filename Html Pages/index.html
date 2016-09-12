@@ -32,8 +32,8 @@
   <body>
    
 
-    <div class="site-branding-area navbar-fixed-top">
-        <div class="container">
+	<div class="mainmenu-area">
+	    <div class="container logoSection">
             <div class="row">
                 <div class="col-md-6">
                     <div class="logo">
@@ -54,9 +54,31 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End site branding area -->
-
-			
+        <div class="topMenuSection">
+            <div class="row">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div> 
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="index.html">Home</a></li>
+                        <li><a href="shop.html">Shop page</a></li>
+                        <li><a href="single-product.html">Single product</a></li>
+                        <li><a href="cart.html">Cart</a></li>
+                        <li><a href="checkout.html">Checkout</a></li>
+                        <li><a href="#">Category</a></li>
+                        <li><a href="#">Others</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>  
+            </div>
+        </div>
+    </div> <!-- End mainmenu area -->		
 	
   
     <div class="single-product-area">
@@ -72,6 +94,8 @@
 							<li><input type="checkbox"/> <span class="menuName">MENU 3</span> <span class="count">(109)</span></li>
 							<li><input type="checkbox"/> <span class="menuName">MENU 4</span> <span class="count">(11)</span></li>
 							<li><input type="checkbox"/> <span class="menuName">MENU 5</span> <span class="count">(678)</span></li>
+							<li><input type="checkbox"/> <span class="menuName">MENU 6</span> <span class="count">(678)</span></li>
+							<li><input type="checkbox"/> <span class="menuName">MENU 7</span> <span class="count">(678)</span></li>
 						</ul>
 					</div>
 					<div class="widget widget-categories">
@@ -214,7 +238,7 @@
         </div>
     </div>
    
-    
+    <p class="top top-7" id="bottom"><i class="fa fa-chevron-up"></i></p>
     
     <div class="footer-top-area">
         <div class="zigzag-bottom"></div>
@@ -248,23 +272,16 @@
     
    
     <!-- Latest jQuery form server -->
-    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="js/jquery.min.js"></script>
     
     <!-- Bootstrap JS form CDN -->
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     
-    <!-- jQuery sticky menu -->
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.sticky.js"></script>
-    
-    <!-- jQuery easing -->
-    <script src="js/jquery.easing.1.3.min.js"></script>
-    
+	<!-- Nice Scroll  -->
+    <script src="js/niceScroll/jquery.nicescroll.js"></script>
+	
     <!-- Main Script -->
     <script src="js/main.js"></script>
-    
-    <!-- Slider -->
-    <script type="text/javascript" src="js/bxslider.min.js"></script>
-	<script type="text/javascript" src="js/script.slider.js"></script>
+	
   </body>
 </html>

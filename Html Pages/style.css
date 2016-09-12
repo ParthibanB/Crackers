@@ -27,7 +27,7 @@ h6 {
     margin: 0 0 15px;
 }
 body { font-family:Arial, Helvetica, sans-serif; }
-
+button, input, optgroup, select, textarea, a{outline:none !important}
 
 
 .header-area {
@@ -73,12 +73,13 @@ body { font-family:Arial, Helvetica, sans-serif; }
     text-align: center;
 }
 
-.mainmenu-area {background: none repeat scroll 0 0 #fbfbfb;
+.mainmenu-area {background: none repeat scroll 0 0 #fff;
 font-family: "Roboto Condensed",sans-serif;
 text-transform: uppercase;
 width: 100%;
-z-index: 999;}
+z-index: 999;overflow: hidden;position: fixed;top: 0;}
 
+.topMenuSection{width: 100%;background: #eee;padding-left: 7.8%;}
 
 .site-branding-area{background:#333333; border-bottom: 1px solid #fff;height: 64px;}
 .logo h1 {
@@ -95,30 +96,31 @@ z-index: 999;}
     color: #5a88ca;
 }
 .shopping-item {
-    /* border: 1px solid #ddd; */
+    border: 1px solid #ef6644;
     float: right;
-    font-size: 18px;
+    font-size: 17px;
     margin-top: 0px;
-    padding: 10px;
+    padding: 5px;
     position: relative;
-    background: #5f5f5f;
-    margin-top: 8px;
+    background: #ffffff;
+    margin-top: 13px;
+    text-align: center;
 }
 .shopping-item a {
-    color: #fff;
+    color: #333;
 }
 .cart-amunt {
-    color: #5a88ca;
+    color: #333;
     font-weight: 700;
 }
 .product-count {
-    background: none repeat scroll 0 0 #5a88ca;
+    background: none repeat scroll 0 0 #ef6644;
     border-radius: 50%;
     color: #fff;
     display: inline-block;
     font-size: 10px;
     height: 20px;
-    padding-top: 2px;
+    padding-top: 3px;
     position: relative;
     right: -4px;
     text-align: center;
@@ -126,33 +128,36 @@ z-index: 999;}
     width: 20px;
 }
 .shopping-item i.fa {
-    margin-left: 15px;
+    margin-left: 5px;color: #ef6644;
 }
 
 
 .shopping-item:hover {
-    background: none repeat scroll 0 0 #5a88ca;
-    border-color: #5a88ca;
+    background: none repeat scroll 0 0 #fbdbd3;
+    border-color: #ef6644;
 }
 .shopping-item:hover a {
-    color: #fff;text-decoration: none
+    color: #333;text-decoration: none
 }
 .shopping-item:hover .cart-amunt {
-    color: #fff;
+    color: #333;
 }
 .shopping-item:hover .product-count {
-    background: none repeat scroll 0 0 #000;
+    background: none repeat scroll 0 0 #ef6644;
 }
 
 
 .mainmenu-area ul.navbar-nav li a {
     color: #6e6a6a;
     font-size: 14px;
-    padding: 20px;
+    padding: 8px 25px;
+    border-bottom: 2px solid transparent;
+    text-align: center;
+	margin-right: 2px;
 }
 
-.mainmenu-area ul.navbar-nav li:hover a, .mainmenu-area ul.navbar-nav li.active a {background: #5a88ca; color:#FFF;}
-.mainmenu-area .nav > li > a:focus {color: #FFF;}
+.mainmenu-area ul.navbar-nav li:hover a, .mainmenu-area ul.navbar-nav li.active a {border-bottom: 2px solid #ef6644;color: #ef6644;}
+.mainmenu-area .nav > li > a:focus {color: #6e6a6a;}
 
 .slider-area { width:80%; position:relative; margin:0 auto; padding:5px;}
 /*-------------------------
@@ -696,7 +701,7 @@ width: 10px;
 .single-product-area .zigzag-bottom {background-color: #f4f4f4}
 
 .single-product-area {
-  padding: 80px 0 130px;
+  padding: 130px 0 130px;
 }
 
 
@@ -723,7 +728,7 @@ input[type="submit"], button[type=submit] {
     padding: 11px 20px;
     text-transform: uppercase;
 }
-input[type="submit"]:hover, button[type=submit]:hover {background-color: #222}
+input[type="submit"]:hover, button[type=submit]:hover {background-color: #6ea6f7;color: #fff;}
 .single-sidebar input[type="text"] {
     margin-bottom: 10px;
     width: 100%;
@@ -1148,7 +1153,8 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
 }
 ul.sidebar-menu {
     overflow: hidden;
-    padding: 0px 0 0 10px;
+    padding: 0px 10px 0 10px;
+	    height: 205px;
 }
 ul.sidebar-menu li {
   border-bottom: 1px solid #e8e8e9;
@@ -1191,7 +1197,7 @@ button.my-btn {
   width: 15%;
 }
 
-.bankDetailSection{min-height:500px;padding-top: 80px;padding-left: 8%}
+.bankDetailSection{min-height:500px;padding-left: 8%}
 
 .footer-area {
   background-color: #333;
@@ -1241,4 +1247,19 @@ ul.footer-contact li i, .widget-icon > a > i {
 
 .menu-area {
     background-color: #f1f1f1;
+}
+.top {
+    background-color: #ef6644;
+    border: 1px solid #fff;
+    bottom: 35px;
+    color: #fff;
+    cursor: pointer;
+    display: none;
+    height: 40px;
+    line-height: 40px;
+    position: fixed;
+    right: 12px;
+    text-align: center;
+    width: 40px;
+    z-index: 9999999;
 }
